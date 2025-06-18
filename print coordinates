@@ -1,0 +1,86 @@
+# api_acceesing-objects-optional-chaining
+
+import React, { useEffect, useState } from 'react';
+
+function Api() {
+
+    const [arr, setArr] = useState([]);
+
+    useEffect(() => {
+        fetch('https://dummyjson.com/users')
+            .then(data => data.json())
+            .then(res => setArr(res.users))
+
+    }, [])
+    console.log(arr)
+
+    function removeItem(id) {
+        alert(id)
+        setArr(arr.filter(item => item.id !== id));
+    }
+
+    function hClick() {
+        let s = '';
+        for (let i = 0; i < arr.length; i++) {
+            //    console.log(arr[i].address) 
+            //    s+=(arr[i].address) 
+            for (const j in arr[i].address) {
+                // console.log(j);
+                for (let x in arr[i][j]) {
+                    console.log(x)
+                }
+            }
+        }
+
+
+    }
+
+    return (
+        <>
+            <h3>User's Information</h3>
+            <div>
+
+                <table border="1" align='center'>
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>firstName</th><th>lastName</th><th>age</th><th>gender</th><th>phone</th><th>username</th><th>image</th><th>address</th><th>city</th><th>bank expiry</th><th colSpan={2}>Coordinates<th>latitude</th><th>longitude</th></th><th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            arr.map((item, i) => (
+
+                                <tr>
+                                    <td>{item.id}</td>
+                                    <td>{item.firstName}</td>
+                                    <td>{item.lastName}</td>
+                                    <td>{item.age}</td>
+                                    <td>{item.gender}</td>
+                                    <td>{item.phone}</td>
+                                    <td>{item.username}</td>
+                                    <td><img src={item.image} height={50} width={50} /></td>
+                                    <td>{item.address.address}</td>
+                                    <td>{item.address.city}</td>
+                                    <td>{item.bank.cardExpire}</td>
+
+                                    {/* <td>{item.address?.coordinates}</td> will not access                                    */}
+                                    <td>{item.address?.coordinates?.lat}</td>
+                                    <td>{item.address?.coordinates?.lng}</td>
+
+
+                                    <button onClick={() => removeItem(item.id)}><th>Delete</th></button>
+
+                                </tr>
+                            ))
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+            <button onClick={hClick} >click</button>
+        </>
+    );
+}
+
+export default Api;
