@@ -1,0 +1,47 @@
+import React, { useState } from 'react';
+
+function App() {
+
+  const [cname, setCname] = useState('')
+  const [maxtem, setMaxTem] = useState(0)
+  const [minTem, setMinTem] = useState(0)
+
+  function hname(e) {
+    setCname(e.target.value);
+  }
+
+  function hmaxTem(e) {
+    setMaxTem(e.target.value);
+  }
+
+  function hminTem(e) {
+    setMinTem(e.target.value);
+  }
+
+  function submit() {
+    console.log('name :' + cname, 'max Temprature :' + maxtem, "min Temprature:" + minTem)
+    let obj = 'name :' + cname + 'max Temprature :' + maxtem + "min Temprature:" + minTem
+
+    document.getElementById('print').innerHTML = obj
+  }
+
+
+  return (
+    <>
+      <div>
+        <h3> Enter City Detail here👇</h3>
+
+        city name: <input type='text' value={cname} onChange={hname} />
+        max temprature: <input type='text' value={maxtem} onChange={hmaxTem} />
+        min temprature: <input type='text' value={minTem} onChange={hminTem} />
+
+        <button onClick={submit}>Submit</button>
+
+      </div>
+      <br />
+      <div id='print'></div>
+    </>
+  );
+}
+
+export default App;
