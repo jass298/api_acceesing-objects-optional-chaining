@@ -1,0 +1,131 @@
+import React, { useState } from 'react';
+
+function Second() {
+
+    const [cid, setCid] = useState(0);
+    const [cname, setCname] = useState('')
+    const [maxtem, setMaxTem] = useState(0)
+    const [minTem, setMinTem] = useState(0)
+    const [arr, setArr] = useState([])
+
+    const [tmt, settmt] = useState(0)
+    const [tmint, settmint] = useState(0)
+
+
+    function hid(e) {
+        setCid(e.target.value);
+    }
+
+    function hname(e) {
+        setCname(e.target.value);
+    }
+
+    function hmaxTem(e) {
+        setMaxTem(e.target.value);
+    }
+
+    function hminTem(e) {
+        setMinTem(e.target.value);
+    }
+
+
+    function submit() {
+
+        let obj = { 'id': cid, 'name': cname, 'maxtem': maxtem, "minTem": minTem }
+
+        arr.push(obj)
+        console.log(arr)
+        setArr(arr)
+        setCname("")
+    }
+
+    function hdelete(id) {
+        alert(id)
+        setArr(arr.filter(item => item.id !== id));
+    }
+
+    function handleMaxTotal() {
+
+        let total = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+            let eachMaxtem = parseInt(arr[i].maxtem);
+            total = total + eachMaxtem
+            
+
+        }
+        settmt(total)
+
+    }
+
+    function handleMinTotal() {
+
+        let total = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+            let eachMintem = parseInt(arr[i].minTem);
+            // console.log(eachMintem)
+            total = total + eachMintem
+            // console.log(total)
+            settmint(total)
+            // console.log(tmint);
+        }
+
+    }
+
+    return (
+        <>
+
+
+            <div>
+                <h4>second page</h4>
+
+                <h3> Enter City Detail here👇</h3>
+
+                id: <input type='text' value={cid} onChange={hid} />
+                city name: <input type='text' value={cname} onChange={hname} />
+                max temprature: <input type='text' value={maxtem} onChange={hmaxTem} />
+                min temprature: <input type='text' value={minTem} onChange={hminTem} />
+
+                <button onClick={submit}>Submit</button>
+
+            </div>
+            <br />
+
+            <div>
+
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Name</th><th>max temprature</th><th>min temprature</th><th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            arr.map((item) => (
+
+                                <tr key={item.id}>
+                                    <td>{item.id}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.maxtem}</td>
+                                    <td>{item.minTem}</td>
+                                    <button onClick={() => hdelete(item.id)}><th>Delete</th></button>
+
+                                </tr>
+                            ))
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <button onClick={handleMaxTotal}>max total</button>
+            <p>max tem total is={tmt}</p>
+
+            <button onClick={handleMinTotal}>min total</button>
+            <p>min tem total is={tmint}</p>
+        </>
+
+    );
+}
+
+export default Second;
